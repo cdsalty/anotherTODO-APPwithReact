@@ -8,6 +8,15 @@ class TodoList extends Component {
     this.state = {
       todos: [{ task: "walk the fish" }, { task: "fly the birds" }] // task will be props in Todo
     };
+
+    this.create = this.create.bind(this); // or use arrow syntax
+  }
+
+  create(newTodo) {
+    // this will need to be passed down into form so I can link to it
+    this.setState({
+      todos: [...this.state.todos, newTodo] // must return array
+    });
   }
 
   render() {
@@ -17,10 +26,9 @@ class TodoList extends Component {
     return (
       <div>
         <h1>Todo List!</h1>
-        <NewTodoForm />
-        <ul>
-          <li>{todos}</li>
-        </ul>
+        <NewTodoForm createTodo={this.create} />
+        {/* create will be a prop inside newTodoForm */}
+        <ul>{todos}</ul>
       </div>
     );
   }
