@@ -11,6 +11,7 @@ class TodoList extends Component {
 
     this.create = this.create.bind(this); // or use arrow syntax
     this.remove = this.remove.bind(this);
+    this.update = this.update.bind(this); // once it's bounded, need to pass it down to each Todo
   }
 
   // CREATE a *new* todo
@@ -30,14 +31,28 @@ class TodoList extends Component {
     });
   }
 
+  // UPDATING TASK involves UPDATING STATE    (never mutate state)
+  update(id, updatedTask) {
+    const updatedTodos = this.state.todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, task: updatedTask };
+      }
+      return todo;
+    });
+    this.setState({
+      todos: updatedTodos
+    });
+  }
+
   render() {
     const todos = this.state.todos.map(todo => {
       return (
         <Todo
           key={todo.id}
-          task={todo.task}
           id={todo.id} // will be used as a prop in Todo.js
+          task={todo.task}
           removeTodo={this.remove} // assign removeTodo inside the todo componment
+          updateTodo={this.update}
         />
       ); // the id is coming from the newToDo created.
     });
