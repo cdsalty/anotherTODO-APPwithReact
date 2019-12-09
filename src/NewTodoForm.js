@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import uuid from "uuid/v4";
 
 class NewTodoForm extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class NewTodoForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // next, call a method being passed down that will create this todo item entered; inside TodoList
-    this.props.createTodo(this.state); // submit the new todo
+    this.props.createTodo({ ...this.state, id: uuid() }); // submit the new todo
     // Once the todo is submitted, I need a clear input for the next todo to be entered
     this.setState({ task: "" }); //  and then clear the input for the next todo item to be entered.
   }

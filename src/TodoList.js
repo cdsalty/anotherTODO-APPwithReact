@@ -6,12 +6,14 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [{ task: "walk the fish" }, { task: "fly the birds" }] // task will be props in Todo
+      todos: [] // task will be props in Todo
     };
 
     this.create = this.create.bind(this); // or use arrow syntax
+    this.remove = this.remove.bind(this);
   }
 
+  // CREATE a *new* todo
   create(newTodo) {
     // this will need to be passed down into form so I can link to it
     this.setState({
@@ -19,9 +21,25 @@ class TodoList extends Component {
     });
   }
 
+  // REMOVING a todo item
+  remove(id) {
+    // removing items based of the id provided by uuid
+    this.setState({
+      // run the id passed in and filter out whichever id matches the id passed in resulting in 'true' to remove
+      todos: this.state.todos.filter(todo => todo.id !== id) // filtering out the matching id
+    });
+  }
+
   render() {
     const todos = this.state.todos.map(todo => {
-      return <Todo task={todo.task} />; // render inside jsx
+      return (
+        <Todo
+          key={todo.id}
+          task={todo.task}
+          id={todo.id} // will be used as a prop in Todo.js
+          removeTodo={this.remove} // assign removeTodo inside the todo componment
+        />
+      ); // the id is coming from the newToDo created.
     });
     return (
       <div>
