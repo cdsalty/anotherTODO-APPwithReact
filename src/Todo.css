@@ -1,0 +1,6 @@
+.completed {
+  color: lightslategray;
+  text-decoration: line-through;
+  cursor: pointer;
+  /* a case for before and after because the pointer only works when it has a class completed. Otherwise, it's the mouse symbol */
+}

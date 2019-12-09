@@ -12,6 +12,7 @@ class TodoList extends Component {
     this.create = this.create.bind(this); // or use arrow syntax
     this.remove = this.remove.bind(this);
     this.update = this.update.bind(this); // once it's bounded, need to pass it down to each Todo
+    this.toggleCompletion = this.toggleCompletion.bind(this);
   }
 
   // CREATE a *new* todo
@@ -44,6 +45,19 @@ class TodoList extends Component {
     });
   }
 
+  // TOGGLE COMPLETION(Adding css effects when clicked)
+  toggleCompletion(id) {
+    const updatedTodos = this.state.todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    this.setState({
+      todos: updatedTodos
+    });
+  }
+
   render() {
     const todos = this.state.todos.map(todo => {
       return (
@@ -51,8 +65,10 @@ class TodoList extends Component {
           key={todo.id}
           id={todo.id} // will be used as a prop in Todo.js
           task={todo.task}
+          completed={todo.completed} // created and assigned for the light-gray/strike-thru effect on completed
           removeTodo={this.remove} // assign removeTodo inside the todo componment
           updateTodo={this.update}
+          toggleTodo={this.toggleCompletion}
         />
       ); // the id is coming from the newToDo created.
     });
